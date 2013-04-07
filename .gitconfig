@@ -1,0 +1,15 @@
+[user]
+	name = naokirin
+	email = naoki.rin186@gmail.com
+[alias]
+	co = checkout
+	olog = log --oneline --graph --decorate --color --tags --branches
+	br = branch --color
+	st = status
+	ls = ls-files
+	tree = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+	df = diff --color
+	diff-words = diff --color-words
+[core]
+	editor = /usr/bin/vim
+	excludesfile = /Users/naoki/.gitignore

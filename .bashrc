@@ -1,8 +1,8 @@
 ##Java PATH setting
 ##Java6
-export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+##export JAVA_HOME=`readlink /usr/libexec/java_home`
 ##Java7
-#export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 export JUNIT_HOME=/Users/naoki/Application/junit4.10
 export SPOCK_HOME=/Users/naoki/Application/spock
 export GROOVY_HOME=/usr/local/Cellar/groovy/2.0.4/libexec/
@@ -19,16 +19,17 @@ alias coqide="open /Applications/CoqIdE_8.3pl3.app"
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #export CC="clang"
 #export CXX="clang++ -stdlib=libc++ -std=c++0x"
-alias gcc=/usr/local/bin/gcc-4.7
-alias g++=/usr/local/bin/g++-4.7
-alias gconv=/usr/local/bin/gcov-4.7
-export CC="gcc"
-export CXX="g++"
+alias gcc=/usr/local/bin/gcc-4.8
+alias g++=/usr/local/bin/g++-4.8
+alias gconv=/usr/local/bin/gcov-4.8
+export CC="gcc-4.8"
+export CXX="g++-4.8"
+export cc1plus="g++-4.8"
 alias vim=/Applications/MacVim.app/Contents/MacOS/Vim
 
 export QMAKESPEC="/usr/local/Cellar/qt/4.8.1/mkspecs/unsupported/macx-clang"
 
-export HXCPP="/usr/lib/haxe/lib/hxcpp/2,10,1/"
+export HXCPP="/usr/lib/haxe/lib/hxcpp/3,0,3-beta"
 
 alias munit="haxelib run munit"
 
@@ -38,10 +39,22 @@ export RUBY_BIN=/usr/local/opt/ruby/bin
 
 export PATH=$RUBY_BIN:$PATH
 
-export OPAM_BIN=/Users/naoki/.opam/4.00.1/bin/
+export OPAM_BIN=/Users/naoki/.opam/4.00.1/bin
 export PATH=$OPAM_BIN:$PATH
 
 alias ls="ls -G"
 alias ll="ls -l -G"
 alias la="ls -la -G"
-alias ctags-cpp="ctags -R --c++-kinds=+l"
+
+alias ctags="/usr/local/bin/ctags"
+alias ctags-cpp="/usr/local/bin/ctags -R --c++-kinds=+pl --fields=+iaS"
+
+alias nornir="haxelib run nornir"
+
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/"
+
+export RBENV_ROOT="/usr/local/var/rbenv"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+source ~/.git-completion.bash
+source ~/.tmuxinator/tmuxinator.bash

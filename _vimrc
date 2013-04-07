@@ -17,8 +17,14 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'Shougo/vimproc'
 
+NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'szw/vim-tags'
 NeoBundle 'vim-jp/cpp-vim'
+NeoBundle 'vim-scripts/yanktmp.vim'
+NeoBundle 'taglist.vim'
+NeoBundle 'jdonaldson/vaxe'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin indent on     " Required!
 "
@@ -112,7 +118,7 @@ let g:clang_complete_auto =1
 set backspace=indent,eol,start
 set nocompatible
 
-set clipboard=unnamed
+"set clipboard+=unnamed,autoselect
 set expandtab
 set number
 set softtabstop=2
@@ -129,6 +135,18 @@ imap OD <Left>
 
 inoremap <silent> <ESC> <ESC>
 inoremap <silent> <C-[> <ESC>
+
+" ***** タブ操作の設定 *****
+nnoremap    [Tab]               <Nop>
+nmap        <C-t>               [Tab]
+nnoremap    <silent> [Tab]n     :<C-u>tabnew<CR>
+nnoremap    <silent> [Tab]c     :<C-u>tabclose<CR>
+nnoremap    <silent> [Tab]o     :<C-u>tabonly<CR>
+nnoremap    [Tab]j              gt
+nnoremap    [Tab]k              gT
+" <C-Tab>にもタブ切り替えを割り当て
+nnoremap    <C-Tab>   gT
+nnoremap    <Tab>       gt
 
 " 全角スペース・行末のスペース・タブの可視化
 if has("syntax")
@@ -161,8 +179,78 @@ map :coqgoto :CoqGoto
 command UniteOutline Unite -vertical -winwidth=30 outline
 
 " tagsジャンプの時に複数ある時は一覧表示
-nnoremap <silent> <C-]> g<C-]> 
+nnoremap <silent> <C-]> g<C-]>
 
 if has('path_extra')
     set tags+=tags;/Users/naoki/;/usr/local/Cellar/gcc48/4.8.1/gcc/include/c++/;/usr/local/Cellar/boost/1.53.0/include/
 endif
+
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_Show_one_File = 1
+let Tlist_Exit_OnlyWindow = 1
+map <silent> <leader>tl :TlistToggle<CR>
+
+let g:vim_tags_auto_generate = 1
+let vim_tags_project_tags_command="/usr/local/bin/ctags -R --c++-kinds=+pl {OPTIONS} {DIRECTORY} 2>/dev/null"
+
+" ------ git now ------
+command! Now :!git-now
+nnoremap <silent> <C-n> :Now
+
+" -----  yanktmp.vim ------
+map <silent> sy :call YanktmpYank()<CR>
+map <silent> sp :call YanktmpPaste_p()<CR>
+map <silent> sP :call YanktmpPaste_P()<CR>
+
+" -----  -----
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'MyFugitive',
+      \   'readonly': 'MyReadonly',
+      \   'modified': 'MyModified',
+      \   'filename': 'MyFilename'
+      \ },
+      \ 'separator': { 'left': ' ', 'right': ' ' },
+      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ }
+
+function! MyModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! MyReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "🔒"
+  else
+    return ""
+  endif
+endfunction
+
+function! MyFugitive()
+  if exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⤴︎ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
