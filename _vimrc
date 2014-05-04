@@ -16,7 +16,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Recommended to install
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'Shougo/vimproc'
-
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'szw/vim-tags'
 NeoBundle 'vim-jp/cpp-vim'
@@ -25,7 +24,8 @@ NeoBundle 'taglist.vim'
 NeoBundle 'jdonaldson/vaxe'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'https://github.com/Shougo/vimshell.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'Shougo/unite.vim'
 
 filetype plugin indent on     " Required!
 "
@@ -223,8 +223,6 @@ set showtabline=2
 map :coqstart :CoqStart
 map :coqgoto :CoqGoto
 
-command UniteOutline Unite -vertical -winwidth=30 outline
-
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <silent> <C-]> g<C-]>
 
@@ -254,7 +252,7 @@ map <silent> sP :call YanktmpPaste_P()<CR>
 set wildmenu
 set wildmode=list:longest
 
-" -----  -----
+" ----- lightline -----
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -307,3 +305,14 @@ function! MyFilename()
        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
+" ----- unite.vim -----
+let g:unite_source_history_yank_enable =1
+let g:unite_source_file_mru_limit = 200
+nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
+
+command UniteOutline Unite -vertical -winwidth=30 outline
+nnoremap <silent> ,uo :<C-u>UniteOutline<CR>
