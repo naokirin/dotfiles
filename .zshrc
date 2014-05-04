@@ -13,7 +13,7 @@ setopt magic_equal_subst
 setopt list_types
 setopt nolistbeep
 
-bindkey -a
+bindkey -a >/dev/null 2>&1
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/Users/naoki/.zshrc'
@@ -59,7 +59,7 @@ if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
-PROMPT="[%n:%{${fg[yellow]}%}%~%{${reset_color}%}]$ "
+PROMPT="[%n:%{${fg[yellow]}%}%(5~,%-2~/.../%2~,%~)%{${reset_color}%}]$ "
 PROMPT2='[%n]> '
 
 [[ -z "$TMUX" && ! -z "$PS1" ]] && tmux

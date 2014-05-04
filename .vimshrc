@@ -1,0 +1,13 @@
+alias gcc=/usr/local/bin/gcc-4.8
+alias g++=/usr/local/bin/g++-4.8
+alias gconv=/usr/local/bin/gcov-4.8
+alias munit="haxelib run munit"
+alias ls="gls --color=auto"
+alias ll="gls -l --color=auto"
+alias la="gls -la -color=auto"
+
+alias ctags="/usr/local/bin/ctags"
+alias ctags-cpp="/usr/local/bin/ctags -R --c++-kinds=+pl --fields=+iaS"
+
+alias nornir="haxelib run nornir"
+
