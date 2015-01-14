@@ -8,14 +8,21 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Recommended to install
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+      \    'build' : {
+      \        'mac'  : 'make -f make_mac.mak',
+      \        'unix' : 'make -f make_unix.mak',
+      \        }
+      \    }
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'szw/vim-tags'
 NeoBundle 'vim-jp/cpp-vim'
@@ -26,6 +33,26 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'basyura/unite-rails'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'dbext.vim'
+NeoBundle 'bbatsov/rubocop'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'rhysd/vim-clang-format'
+NeoBundle "thinca/vim-quickrun"
+NeoBundle "osyo-manga/shabadou.vim"
+NeoBundle "osyo-manga/vim-watchdogs"
+NeoBundle "jceb/vim-hier"
+NeoBundle "yonchu/quickfixstatus"
+NeoBundle 'tyru/vim-altercmd'
+
+" :WatchdogsRun後にlightline.vimを更新
+let g:Qfstatusline#UpdateCmd = function('lightline#update')
+
+NeoBundle "KazuakiM/vim-qfstatusline"
 
 filetype plugin indent on     " Required!
 "
@@ -36,6 +63,10 @@ filetype plugin indent on     " Required!
 
 " Installation check.
 NeoBundleCheck
+
+" ----- vim-altercmd -----
+call altercmd#load()
+
 
 set completeopt=menuone
 let g:neocomplcache_clang_use_library  = 1
@@ -257,7 +288,8 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ] ]
+      \             [ 'fugitive', 'filename' ] ],
+      \   'right':[ [ 'syntaxcheck' ] ]
       \ },
       \ 'component_function': {
       \   'fugitive': 'MyFugitive',
@@ -266,7 +298,14 @@ let g:lightline = {
       \   'filename': 'MyFilename'
       \ },
       \ 'separator': { 'left': ' ', 'right': ' ' },
-      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ 'subseparator': { 'left': ' ', 'right': ' ' },
+      \ 'mode_map': {'c': 'NORMAL'},
+      \ 'component_expand': {
+      \   'syntaxcheck': 'qfstatusline#Update',
+      \ },
+      \ 'component_type': {
+      \   'syntaxcheck': 'error',
+      \ },
       \ }
 
 function! MyModified()
@@ -313,6 +352,101 @@ nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
+nnoremap <silent> ,url :<C-u>Unite -vertical -winwidth=30 rails/
 
 command UniteOutline Unite -vertical -winwidth=30 outline
 nnoremap <silent> ,uo :<C-u>UniteOutline<CR>
+
+" ----- vaxe -----
+"set autogroup
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" vaxeの動作にはautowriteを有効にする必要がある
+autocmd MyAutoCmd FileType haxe
+      \ setl autowrite
+autocmd MyAutoCmd FileType hxml
+      \ setl autowrite
+autocmd MyAutoCmd FileType nmml.xml
+      \ setl autowrite
+
+let g:vaxe_haxe_version = 3
+
+function! s:init_vaxe_keymap()
+  " .hxmlファイルを開いてくれる
+  nnoremap <buffer> ,vo :<C-u>call vaxe#OpenHxml()<CR>
+  " タグファイル作ってくれる
+  nnoremap <buffer> ,vc :<C-u>call vaxe#Ctags()<CR>
+  " 自動インポート
+  nnoremap <buffer> ,vi :<C-u>call vaxe#ImportClass()<CR>
+endfunction
+
+autocmd MyAutoCmd FileType haxe call s:init_vaxe_keymap()
+autocmd MyAutoCmd FileType hxml call s:init_vaxe_keymap()
+autocmd MyAutoCmd FileType nmml.xml call s:init_vaxe_keymap()
+
+" 以下はNeocomplete用
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.|\()'
+
+" ----- syntastic -----
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_mode_map = { 'mode': 'passive' }
+nnoremap ,s :SyntasticCheck<CR>
+nnoremap ,es :Errors<CR>
+
+" ----- vim-clang-format -----
+map ,x :ClangFormat<CR>
+
+" ----- watchdogs -----
+let g:quickrun_config = {
+      \   "watchdogs_checker/_" : {
+      \       "hook/u_nya_/enable" : 1,
+      \       "hook/inu/enable" : 0,
+      \       "hook/unite_quickfix/enable" : 0,
+      \       "hook/echo/enable" : 1,
+      \       "hook/back_buffer/enable" : 0,
+      \       "hook/close_unite_quickfix/enable" : 0,
+      \       "hook/close_buffer/enable_exit" : 0,
+      \       "hook/close_quickfix/enable_exit" : 1,
+      \       "hook/redraw_unite_quickfix/enable_exit" : 0,
+      \       "hook/close_unite_quickfix/enable_exit" : 1,
+      \       "hook/echo/output_success": "> No Errors Found.",
+      \   },
+      \
+      \   "cpp/watchdogs_checker" : {
+      \       "hook/add_include_option/enable" : 1,
+      \       "type" : "watchdogs_checker/g++",
+      \   },
+      \
+      \   "watchdogs_checker/g++" : {
+      \       "cmdopt" : "-std=c++0x -Wall",
+      \   },
+      \
+      \   "watchdogs_checker/clang++" : {
+      \       "cmdopt" : "-std=c++0x -Wall",
+      \   },
+      \   "ruby/watchdogs_checker" : {
+      \       "type" : "watchdogs_checker/rubocop"
+      \   }
+      \}
+
+" watchdogsのフックを設定
+let g:quickrun_config["watchdogs_checker/_"] = {
+      \ "outputter/quickfix/open_cmd" : "",
+      \ "hook/qfstatusline_update/enable_exit" : 1,
+      \ "hook/qfstatusline_update/priority_exit" : 4,
+      \ }
+
+call watchdogs#setup(g:quickrun_config)
+
+nnoremap ,w :WatchdogsRun<CR>
+
+" ----- vim-rails -----
+autocmd User Rails AlterCommand r R
+autocmd User Rails AlterCommand rc Rcontroller
+autocmd User Rails AlterCommand rm Rmodel
+autocmd User Rails AlterCommand rv Rview
