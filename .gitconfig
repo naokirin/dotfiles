@@ -11,6 +11,6 @@
 	df = diff --color
 	diff-words = diff --color-words
 [core]
-	editor = /usr/bin/vim
-	excludesfile = /Users/naoki/.gitignore
+	editor = /usr/bin/nvim
+	excludesfile = ~/.gitignore
 	quotepath = false
