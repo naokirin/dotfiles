@@ -8,4 +8,13 @@ repo = 'itchyny/lightline.vim'
 repo = 'scrooloose/nerdtree'
 
 [[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+
+[[plugins]]
 repo = 'tyru/vim-altercmd'
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+
+[[plugins]]
+repo = 'bkad/CamelCaseMotion'

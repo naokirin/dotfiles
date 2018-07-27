@@ -1,5 +1,9 @@
 set fileencodings=utf-8
 scriptencoding=utf-8
+set encoding=utf-8
+set termencoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
 
 filetype plugin indent off
 
@@ -8,7 +12,8 @@ colorscheme desert
 if !has('gui_running')
   set notimeout
   set ttimeout
-  set timeoutlen=100
+  set timeoutlen=10
+  set timeoutlen=10
 endif
 
 "dein Scripts-----------------------------
@@ -230,6 +235,49 @@ call altercmd#load()
 
 " ----- [End] vim-altercmd -----
 
+" ----- [Start] vim-nerdtree-tabs -----
+
+let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_focus_on_files = 1
+let NERDTreeWinSize=40
+let NERDTreeIgnore = ['\.gch']
+
+let mapleader = '\'
+
+" ----- [End] vim-nerdtree-tabs -----
+
+" ----- [Start] vim-altr -----
+
+nmap <Leader>a <Plug>(altr-forward)
+nmap <Leader>f :call OpenNewTab()<CR> <Plug>(altr-forward)<CR>
+function! OpenNewTab()
+  let f = expand("%:p")
+  execute ":tabnew ".f
+endfunction
+
+" ----- [End] vim-altr -----
+
+" ----- [Start] CamelCaseMotion -----
+
+map <Bslash> w <Plug>CamelCaseMotion_w
+map <Bslash> b <Plug>CamelCaseMotion_b
+map <Bslash> e <Plug>CamelCaseMotion_e
+
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+
+sunmap w
+sunmap b
+sunmap e
+
+" ----- [End] CamelCaseMotion -----
+
+hi SpellBad cterm=NONE ctermfg=white ctermbg=darkred
+
 set noswapfile
 set hlsearch
+
+set fillchars+=vert:\|
+
 filetype plugin indent on     " Required!
