@@ -11,6 +11,6 @@
 	df = diff --color
 	diff-words = diff --color-words
 [core]
-	editor = /usr/bin/nvim
+	editor = /usr/local/bin/nvim
 	excludesfile = ~/.gitignore
 	quotepath = false
