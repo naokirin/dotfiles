@@ -241,6 +241,7 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 let g:nerdtree_tabs_focus_on_files = 1
 let NERDTreeWinSize=40
 let NERDTreeIgnore = ['\.gch']
+let NERDTreeShowHidden=1
 
 let mapleader = '\'
 
@@ -272,6 +273,10 @@ sunmap b
 sunmap e
 
 " ----- [End] CamelCaseMotion -----
+
+" ----- [Start] vim-indet-guides -----
+let g:indent_guides_enable_on_vim_startup = 1
+" ----- [End] vim-indent-guides -----
 
 hi SpellBad cterm=NONE ctermfg=white ctermbg=darkred
 

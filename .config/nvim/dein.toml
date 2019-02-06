@@ -18,3 +18,18 @@ repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
 repo = 'bkad/CamelCaseMotion'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+
+[[plugins]]
+repo = 'tpope/vim-rbenv'
+
+[[plugins]]
+repo = 'tpope/vim-bundler'
