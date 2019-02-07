@@ -20,6 +20,9 @@ repo = 'ctrlpvim/ctrlp.vim'
 repo = 'bkad/CamelCaseMotion'
 
 [[plugins]]
+repo = 'w0rp/ale'
+
+[[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]
@@ -33,3 +36,19 @@ repo = 'tpope/vim-rbenv'
 
 [[plugins]]
 repo = 'tpope/vim-bundler'
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'danchoi/ri.vim'

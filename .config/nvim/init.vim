@@ -62,6 +62,12 @@ if dein#check_install()
   call dein#install()
 endif
 
+if has('nvim')
+  let g:python_host_prog  = '/usr/local/bin/python'
+  let g:python3_host_prog = '/usr/local/bin/python3'
+  let g:ruby_host_prog = '~/.rbenv/shims/ruby'
+endif
+
 " ----- [Start] Basic settings -----
 
 set backspace=indent,eol,start
@@ -175,6 +181,12 @@ au BufNewFile,BufRead *.rs set nowrap expandtab tabstop=4 shiftwidth=4
 
 " ----- [End] autocmd file settings -----
 
+" ----- [Start] deoplete.vim -----
+
+let g:deoplete#enable_at_startup = 1
+
+" ----- [End] deoplete.vim -----
+
 " ----- [Start] lightline -----
 
 let g:lightline = {
@@ -275,8 +287,42 @@ sunmap e
 " ----- [End] CamelCaseMotion -----
 
 " ----- [Start] vim-indet-guides -----
+
 let g:indent_guides_enable_on_vim_startup = 1
+
 " ----- [End] vim-indent-guides -----
+
+" ----- [Start] ale -----
+
+let g:ale_fixers = {
+\   'ruby': ['rubocop'],
+\}
+
+" ----- [End] ale -----
+
+" ----- [Start] neosnippet.vim -----
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" ----- [End] neosnippet.vim -----
 
 hi SpellBad cterm=NONE ctermfg=white ctermbg=darkred
 
