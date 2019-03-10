@@ -94,3 +94,7 @@ export GOPATH=$HOME/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/naoki/.sdkman"
+[[ -s "/Users/naoki/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/naoki/.sdkman/bin/sdkman-init.sh"

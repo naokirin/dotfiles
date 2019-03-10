@@ -52,3 +52,15 @@ repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'danchoi/ri.vim'
+
+[[plugins]]
+repo = 'kana/vim-altr'
+
+[[plugins]]
+repo = 'posva/vim-vue'
+hook_add = '''
+  set hidden
+  let g:LanguageClient_serverCommands = {
+      \ 'vue': ['vls'],
+      \ }
+'''

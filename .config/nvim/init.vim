@@ -168,6 +168,12 @@ set showtabline=2 " 常にタブラインを表示
 
 " ----- [End] Basic settings -----
 
+" ----- [Start] vim-altercmd -----
+
+call altercmd#load()
+
+" ----- [End] vim-altercmd -----
+
 " ----- [Start] autocmd file settings -----
 
 autocmd BufNew,BufRead * highlight cComment ctermfg=lightblue guifg=lightblue
@@ -241,12 +247,6 @@ set laststatus=2
 
 " ----- [End] lightline -----
 
-" ----- [Start] vim-altercmd -----
-
-call altercmd#load()
-
-" ----- [End] vim-altercmd -----
-
 " ----- [Start] vim-nerdtree-tabs -----
 
 let g:nerdtree_tabs_open_on_console_startup = 1
@@ -260,6 +260,10 @@ let mapleader = '\'
 " ----- [End] vim-nerdtree-tabs -----
 
 " ----- [Start] vim-altr -----
+
+call altr#define('%.h', '%.c')
+call altr#define('%.h', '%.cpp')
+call altr#define('%.hpp', '%.cpp')
 
 nmap <Leader>a <Plug>(altr-forward)
 nmap <Leader>f :call OpenNewTab()<CR> <Plug>(altr-forward)<CR>
