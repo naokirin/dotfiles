@@ -57,10 +57,27 @@ repo = 'danchoi/ri.vim'
 repo = 'kana/vim-altr'
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls'],
+    \ 'html': [],
+    \ 'javascript': [],
+    \ 'css': [],
+    \ }
+'''
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
+
+[[plugins]]
 repo = 'posva/vim-vue'
 hook_add = '''
   set hidden
   let g:LanguageClient_serverCommands = {
       \ 'vue': ['vls'],
       \ }
+  autocmd FileType vue syntax sync fromstart
 '''
