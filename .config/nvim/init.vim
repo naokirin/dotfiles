@@ -166,6 +166,9 @@ endif
 
 set showtabline=2 " 常にタブラインを表示
 
+" ターミナルでもESCでコマンドモードにする
+tnoremap <silent> <ESC> <C-\><C-n>
+
 " ----- [End] Basic settings -----
 
 " ----- [Start] vim-altercmd -----
@@ -184,6 +187,9 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd BufNewFile,BufRead *.rb,*.haml,*.erb,*.slim set nowrap tabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.cpp,*.h,*.hpp,*.cc set nowrap tabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.rs set nowrap expandtab tabstop=4 shiftwidth=4
+autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+autocmd Filetype vue inoremap <buffer> </ </<C-x><C-o>
 
 " ----- [End] autocmd file settings -----
 
