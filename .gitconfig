@@ -2,15 +2,49 @@
 	name = naokirin
 	email = naoki.rin186@gmail.com
 [alias]
-	co = checkout
-	olog = log --oneline --graph --decorate --color --tags --branches
-	br = branch --color
-	st = status
-	ls = ls-files
-	tree = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
-	df = diff --color
-	diff-words = diff --color-words
+  alias = !"if test -z $1; then loop=; for k in `git config --get-regexp ^alias\\. | sort | sed -e 's/^alias\\.\\(\\S*\\).*/\\1/g'`; do echo -n $k; loop="${loop}1"; if test ${#loop} -lt 5; then echo -n '\t'; else echo; loop=; fi; done; exit; fi; git config --list | grep ^alias\\.$1= | sed -e s/^alias\\.//; exit;"
+
+  commti = commit
+  comit = commit
+  commmit = commit
+  co = checkout
+  br = branch
+  st = status
+  df = diff
+  diff-words = diff --color-words
+  ds = diff --staged
+  dsf = "!sh -c \"git diff --color $1 | diff-so-fancy | less --tabs=4 -RFXSC --pattern='^(added|deleted|modified): '\" - "
+  topic = "!sh -c 'git co -b $1 master' dummy"
+  dfx = !git diff | gitx
+  tree = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  tre = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  treee = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  pr = pull --rebase origin master
+  fe = fetch
+  unstage = reset HEAD --
+  k = !gitk
+  dhh = diff HEAD^
+  olog = log --decorate=full --branches --oneline --graph --color --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  lol = log --oneline --color
+  ls = ls-files
+  alog = log --name-status --diff-filter=A
+  dlog = log --name-status --diff-filter=D
+  rlog = log --name-status --diff-filter=R
+  npgr = grep -np
+  brl = "!sh -c 'git br | egrep -v \"master$$\" | perl -pe \"s/\\*(.*$)/\\033\\[0;32m$&\\033\\[0m/gi\"'"
+  brud = "!f() { git branch --merged \"$@\" | sed -e \"s/^ *//g\" | grep -v \"^\\*\\|^master$\" | xargs --no-run-if-empty git branch --delete; }; f"
+  lsus = "!f() { git ls-files --others --exclude-standard | grep \"$@\"; }; f"
+  rbr = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; nvim `f`"
+
+  cch= "!f() { git cherry -v \"$@\" | awk '{ if($1 == \"+\"){ color = \"green\" } if($1 == \"-\"){ color = \"red\" } cmd = \"git show --date=short --no-notes --pretty=format:\\047%C\" color $1 \" %h %Cgreen%cd %Cblue%cn%x09%Creset%s\\047 --summary \" $2; cmd | getline t; close(cmd); print t }' ;}; f"
+
+  uf = ls-files -o --exclude-standard
+
+  copr = "!f() { git fetch origin pull/$1/merge && git checkout FETCH_HEAD; }; f"
 [core]
-	editor = /usr/local/bin/nvim
-	excludesfile = ~/.gitignore
-	quotepath = false
+  editor = /usr/local/bin/nvim
+  excludesfile = ~/.gitignore
+  quotepath = false
+
