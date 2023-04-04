@@ -81,3 +81,6 @@ hook_add = '''
       \ }
   autocmd FileType vue syntax sync fromstart
 '''
+
+[[plugins]]
+repo = 'JuliaEditorSupport/julia-vim'
