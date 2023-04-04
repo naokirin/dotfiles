@@ -74,7 +74,7 @@ fi
 PROMPT="[%n:%{${fg[yellow]}%}%(5~,%-2~/.../%2~,%~)%{${reset_color}%}]$ "
 PROMPT2='[%n]> '
 
-[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux
+[[ -z "$TMUX" && ! -z "$PS1" && "$START_UP_TMUX" != "false" ]] && tmux
 
 export JAVA_HOME=`/usr/libexec/java_home`
 
@@ -86,6 +86,8 @@ alias ls="/usr/local/bin/gls --color=auto"
 alias ll="/usr/local/bin/gls -l --color=auto"
 alias la="/usr/local/bin/gls -la --color=auto"
 
+alias sed="/usr/local/bin/gsed"
+
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -U compinit
 compinit -u
@@ -94,6 +96,10 @@ export GOPATH=$HOME/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+export GODEBUG=asyncpreemptoff=1
+
+export PATH="$PATH:$HOME/.pub-cache/bin"
+export PATH="$PATH:$HOME/fvm/default/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/naoki/.sdkman"
